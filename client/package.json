@@ -13,10 +13,14 @@
     "@emotion/style": "^0.8.0",
     "@mui/material": "^7.3.2",
     "@mui/x-data-grid": "^8.11.2",
+    "@reduxjs/toolkit": "^2.9.0",
+    "dotenv": "^17.2.2",
     "lucide-react": "^0.544.0",
     "next": "^15.5.3",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-redux": "^9.2.0",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
