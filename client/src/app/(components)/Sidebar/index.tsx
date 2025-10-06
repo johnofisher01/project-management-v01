@@ -1,6 +1,10 @@
 "use client";
-import { LockIcon } from "lucide-react";
+
+import { useAppSelector, useAppDispatch } from "@/app/redux";
+import { LockIcon, LucideIcon, Home, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
 type Props = {};
@@ -9,7 +13,17 @@ const Sidebar = (props: Props) => {
   const [showProjects, setShowProjects] = useState(true);
   const [showPriority, setShowPriority] = useState(true);
 
-  const sidebarClassnames = `fixed flex flex-col h-[100%] justify-between shadow-xl transition-all duration-300 h-full z-40 dark:bg-black overflow-y-auto bg-white w-64`;
+  const dispatch = useAppDispatch();
+  const isSidebarCollapsed = useAppSelector(
+    (state) => state.global.isSidebarCollapsed,
+  );
+
+  const sidebarClassnames = `
+    fixed flex flex-col h-[100%] justify-between shadow-xl 
+    transition-all duration-300 h-full z-40 dark:bg-black 
+    overflow-y-auto bg-white ${isSidebarCollapsed ? "w-0" : "w-64"}
+  `;
+
   return (
     <div className={sidebarClassnames}>
       <div className="flex h-[100%] w-full flex-col justify-start">
@@ -18,8 +32,19 @@ const Sidebar = (props: Props) => {
           <div className="text-xl font-bold text-gray-800 dark:text-white">
             LIST
           </div>
+          {!isSidebarCollapsed && (
+            <button
+              className="py-3"
+              onClick={() =>
+                dispatch(setIsSidebarCollapsed(!isSidebarCollapsed))
+              }
+            >
+              <X className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+            </button>
+          )}
         </div>
 
+        {/* Team Section */}
         <div className="flex items-center gap-5 border-y-[1.5px] border-gray-200 px-8 py-4 dark:border-gray-700">
           <Image src="/logo.png" alt="logo" width={40} height={40} />
           <div className="flex flex-col">
@@ -32,9 +57,65 @@ const Sidebar = (props: Props) => {
             </div>
           </div>
         </div>
+
         {/* Navigation Links */}
+        <nav className="z-10 w-full">
+          <SidebarLink href="/" icon={Home} label="Home" href="/" />
+        </nav>
+        <div className="mt-4 flex flex-col">
+          <SidebarLink
+            href="/dashboard"
+            icon={LockIcon}
+            label="Dashboard"
+            //   isCollapsed={false}
+          />
+          {/* Add more SidebarLink components here */}
+        </div>
       </div>
     </div>
+  );
+};
+
+interface SidebarLinkProps {
+  href: string;
+  icon: LucideIcon;
+  label: string;
+  // isCollapsed: boolean;
+}
+
+const SidebarLink = ({
+  href,
+  icon: Icon,
+  label,
+  isCollapsed,
+}: SidebarLinkProps) => {
+  const pathname = usePathname();
+  const isActive =
+    pathname === href || (pathname === "/" && href === "/dashboard");
+  const screenWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+
+  const dispatch = useAppDispatch();
+  const isSidebarCollapsed = useAppSelector(
+    (state) => state.global.isSidebarCollapsed,
+  );
+
+  return (
+    <Link href={href} className="w-full">
+      <div
+        className={`relative flex cursor-pointer items-center gap-3 transition-colors hover:bg-gray-100 dark:bg-black dark:hover:bg-gray-700 ${isActive ? "bg-gray-100 text-white dark:bg-gray-600" : ""} mx-2 my-1 rounded-lg p-3`}
+      >
+        {isActive && (
+          <div className="absolute top-0 left-0 h-[100%] w-[5px] bg-blue-500"></div>
+        )}
+
+        <Icon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+        {!isCollapsed && (
+          <span className={`font-medium text-gray-800 dark:text-gray-100`}>
+            {label}
+          </span>
+        )}
+      </div>
+    </Link>
   );
 };
 
