@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
+import { setIsSidebarCollapsed } from "@/state";
+
 
 type Props = {};
 
