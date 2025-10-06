@@ -1,13 +1,22 @@
 "use client";
 
 import { useAppSelector, useAppDispatch } from "@/app/redux";
-import { LockIcon, LucideIcon, Home, X } from "lucide-react";
+import {
+  LockIcon,
+  LucideIcon,
+  Home,
+  X,
+  Briefcase,
+  Search,
+  Settings,
+  User,
+  Users,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { setIsSidebarCollapsed } from "@/state";
-
 
 type Props = {};
 
@@ -63,6 +72,16 @@ const Sidebar = (props: Props) => {
         {/* Navigation Links */}
         <nav className="z-10 w-full">
           <SidebarLink href="/" icon={Home} label="Home" href="/" />
+
+          <SidebarLink href="/" icon={Briefcase} label="Timeline" href="/timeline" />
+
+          <SidebarLink href="/" icon={Search} label="Search" href="/search" />
+
+          <SidebarLink href="/" icon={Settings} label="Settings" href="/settings" />
+
+          <SidebarLink href="/" icon={User} label="Users" href="/users" />
+
+          <SidebarLink href="/" icon={Users} label="Teams" href="/teams" />
         </nav>
         <div className="mt-4 flex flex-col">
           <SidebarLink
@@ -82,7 +101,6 @@ interface SidebarLinkProps {
   href: string;
   icon: LucideIcon;
   label: string;
-  // isCollapsed: boolean;
 }
 
 const SidebarLink = ({
@@ -94,12 +112,6 @@ const SidebarLink = ({
   const pathname = usePathname();
   const isActive =
     pathname === href || (pathname === "/" && href === "/dashboard");
-  const screenWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-
-  const dispatch = useAppDispatch();
-  const isSidebarCollapsed = useAppSelector(
-    (state) => state.global.isSidebarCollapsed,
-  );
 
   return (
     <Link href={href} className="w-full">
