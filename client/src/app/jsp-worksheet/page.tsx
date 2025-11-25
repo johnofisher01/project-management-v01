@@ -95,9 +95,8 @@ export default function JSPWorksheetPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form submitted:", formData);
+      // Form data is ready to be sent to an API
       setSubmitted(true);
-      // Here you would typically send the data to an API
     }
   };
 
@@ -135,14 +134,16 @@ export default function JSPWorksheetPage() {
     <div className="min-h-screen bg-gray-50 p-4 dark:bg-gray-900">
       <div className="mx-auto max-w-2xl">
         {/* Form Header */}
-        <div className="mb-6 rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
-          <div className="border-t-8 border-blue-600 -mx-6 -mt-6 mb-4 rounded-t-lg"></div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            JSP Worksheet
-          </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Fill out the job sheet details below. All fields marked with * are required.
-          </p>
+        <div className="mb-6 overflow-hidden rounded-lg bg-white shadow-lg dark:bg-gray-800">
+          <div className="h-2 bg-blue-600"></div>
+          <div className="p-6">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+              JSP Worksheet
+            </h1>
+            <p className="mt-2 text-gray-600 dark:text-gray-400">
+              Fill out the job sheet details below. All fields marked with * are required.
+            </p>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
