@@ -11,19 +11,15 @@ import {
   Settings,
   User,
   Users,
+  ClipboardList,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 import { setIsSidebarCollapsed } from "@/state";
 
-type Props = {};
-
-const Sidebar = (props: Props) => {
-  const [showProjects, setShowProjects] = useState(true);
-  const [showPriority, setShowPriority] = useState(true);
-
+const Sidebar = () => {
   const dispatch = useAppDispatch();
   const isSidebarCollapsed = useAppSelector(
     (state) => state.global.isSidebarCollapsed,
@@ -71,24 +67,25 @@ const Sidebar = (props: Props) => {
 
         {/* Navigation Links */}
         <nav className="z-10 w-full">
-          <SidebarLink href="/" icon={Home} label="Home" href="/" />
+          <SidebarLink icon={Home} label="Home" href="/" />
 
-          <SidebarLink href="/" icon={Briefcase} label="Timeline" href="/timeline" />
+          <SidebarLink icon={Briefcase} label="Timeline" href="/timeline" />
 
-          <SidebarLink href="/" icon={Search} label="Search" href="/search" />
+          <SidebarLink icon={Search} label="Search" href="/search" />
 
-          <SidebarLink href="/" icon={Settings} label="Settings" href="/settings" />
+          <SidebarLink icon={Settings} label="Settings" href="/settings" />
 
-          <SidebarLink href="/" icon={User} label="Users" href="/users" />
+          <SidebarLink icon={User} label="Users" href="/users" />
 
-          <SidebarLink href="/" icon={Users} label="Teams" href="/teams" />
+          <SidebarLink icon={Users} label="Teams" href="/teams" />
+
+          <SidebarLink icon={ClipboardList} label="JSP Worksheet" href="/jsp-worksheet" />
         </nav>
         <div className="mt-4 flex flex-col">
           <SidebarLink
             href="/dashboard"
             icon={LockIcon}
             label="Dashboard"
-            //   isCollapsed={false}
           />
           {/* Add more SidebarLink components here */}
         </div>
@@ -101,6 +98,7 @@ interface SidebarLinkProps {
   href: string;
   icon: LucideIcon;
   label: string;
+  isCollapsed?: boolean;
 }
 
 const SidebarLink = ({
